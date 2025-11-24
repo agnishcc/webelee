@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    /* Modern JS output */
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+
+    /* Import/export behavior */
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+
+    /* Type safety & DX */
+    "strict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}

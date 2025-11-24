@@ -1,0 +1,23 @@
+{
+  "extends": "../../.config/tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["bun"],
+    "typeRoots": ["../../node_modules/@types"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "hono/jsx",
+    "noFallthroughCasesInSwitch": true,
+    // Some stricter flags (disabled by default)
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noPropertyAccessFromIndexSignature": false,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/types": ["./types.ts"],
+      "@/server/*": ["./server/*"],
+      "@/logger": ["./server/logger.ts"],
+      "@/lib/*": ["./src/lib/*"],
+      "@repo/*": ["../../packages/*"],
+      "@/packageJson": ["./package.json"]
+    }
+  }
+}

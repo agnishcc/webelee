@@ -1,0 +1,15 @@
+{
+  "name": "@repo/logger",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "pino": "^9.10.0",
+    "pino-pretty": "^13.1.1"
+  }
+}
