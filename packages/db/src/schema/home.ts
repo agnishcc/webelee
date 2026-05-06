@@ -16,8 +16,8 @@ export type NewHome = typeof home.$inferInsert;
 export const homeRelation = relations(home, ({ many }) => {
     return {
         users: many(user),
-        categories: many(categories),
         userHomeBridges: many(userHomeBridge),
+        categoriesHomeBridges: many(categoriesHomeBridge),
     };
 });
 
@@ -38,6 +38,28 @@ export const userHomeBridgeRelation = relations(userHomeBridge, ({ one }) => {
         }),
         home: one(home, {
             fields: [userHomeBridge.homeId],
+            references: [home.id],
+        }),
+    };
+});
+
+export const categoriesHomeBridge = pgTable('categories_home_bridge', {
+    id: serial('id').primaryKey().notNull(),
+    categoryId: integer('category_id').notNull().references(() => categories.id),
+    homeId: integer('home_id').notNull().references(() => home.id),
+});
+
+export type CategoriesHomeBridge = typeof categoriesHomeBridge.$inferSelect;
+export type NewCategoriesHomeBridge = typeof categoriesHomeBridge.$inferInsert;
+
+export const categoriesHomeBridgeRelation = relations(categoriesHomeBridge, ({ one }) => {
+    return {
+        category: one(categories, {
+            fields: [categoriesHomeBridge.categoryId],
+            references: [categories.id],
+        }),
+        home: one(home, {
+            fields: [categoriesHomeBridge.homeId],
             references: [home.id],
         }),
     };

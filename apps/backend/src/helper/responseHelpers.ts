@@ -45,6 +45,34 @@ export const NotFoundResponse = {
     },
 }
 
+export const ConflictResponse = {
+    409: {
+        description: "Conflict",
+        content: {
+            "application/json": {
+                schema:
+                    z.object({
+                        message: z.string().openapi({ description: "Error message", example: "Conflict" }),
+                    }),
+            },
+        },
+    },
+}
+
+export const TooManyRequestsResponse = {
+    429: {
+        description: "Too Many Requests",
+        content: {
+            "application/json": {
+                schema:
+                    z.object({
+                        message: z.string().openapi({ description: "Error message", example: "Too Many Requests" }),
+                    }),
+            },
+        },
+    },
+}
+
 
 export const InternalServerErrorResponse = {
     500: {
@@ -74,3 +102,13 @@ export const BadRequestResponse = {
 }
 
 
+export const BaseErrorResponses = {
+
+    ...UnauthorizedResponse,
+    ...ForbiddenResponse,
+    ...NotFoundResponse,
+    ...ConflictResponse,
+    ...TooManyRequestsResponse,
+    ...InternalServerErrorResponse,
+    ...BadRequestResponse,
+}

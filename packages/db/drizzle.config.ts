@@ -1,15 +1,28 @@
-// import 'dotenv/config';
-import type { Config } from 'drizzle-kit';
+import * as dotenv from 'dotenv';
+import { defineConfig } from 'drizzle-kit';
+import { Pool } from 'pg'
+dotenv.config({
+    path: '../../.env',
+});
+console.log("env", process.env.DB_URL);
 
 
-
-
-export default {
-    schema: 'src/schema/',
+export default defineConfig({
+    schema: './src/schemaGroup.ts',
     out: './migrations',
     dialect: 'postgresql',
+    verbose: true,
     dbCredentials: {
-        // eslint-disable-next-line turbo/no-undeclared-env-vars
-        url: process.env.DB_URL!,
+        database: process.env.DB_NAME!,
+        host: process.env.DB_HOST!,
+        password: process.env.DB_PASSWORD!,
+        user: process.env.DB_USER!,
+        port: 5432,
+        ssl: false
     },
-} satisfies Config;
+    migrations: {
+        table: '__drizzle_migration',
+        schema: 'public'
+    },
+
+});

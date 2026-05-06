@@ -2,6 +2,7 @@ import { integer, pgTable, serial } from "drizzle-orm/pg-core";
 import { user } from "./user";
 import { categories } from "./categories";
 import { relations } from "drizzle-orm"
+import { home } from "./home";
 
 export const transaction = pgTable('transaction', {
     id: serial('id').primaryKey().notNull(),
@@ -9,6 +10,7 @@ export const transaction = pgTable('transaction', {
     amount: integer('amount').notNull(),
     currency: integer('currency').notNull(),
     categoryId: integer('category_id').notNull().references(() => categories.id),
+    homeId: integer('home_id').notNull().references(() => home.id),
     paymentMethod: integer('payment_method'),
     createdAt: integer('createdAt').notNull(),
     updatedAt: integer('updatedAt').notNull(),
@@ -28,6 +30,10 @@ export const transactionRelation = relations(transaction, ({ one }) => {
         category: one(categories, {
             fields: [transaction.categoryId],
             references: [categories.id],
+        }),
+        home: one(home, {
+            fields: [transaction.homeId],
+            references: [home.id],
         }),
     };
 });

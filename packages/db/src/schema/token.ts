@@ -3,13 +3,14 @@ import { relations } from 'drizzle-orm';
 import { pgTable, text, timestamp, serial, integer } from 'drizzle-orm/pg-core';
 import { transaction } from './transaction';
 import { home, userHomeBridge } from './home';
+import { user } from '../..';
 
 export const TokenType = ['MAGIC_LINK', 'VERIFY', 'REFRESH'] as const;
-export const user = pgTable('user', {
+export const tokens = pgTable('tokens', {
     id: serial('id').primaryKey().notNull(),
     type: text('type', { enum: TokenType }).notNull(),
-    name: text('name').notNull(),
-    profilePictureUrl: text('profile_picture_url'),
+    value: text('value').notNull(),
+    userId: integer('user_id').notNull().references(() => user.id),
     createdAt: timestamp('createdAt', { precision: 3, mode: 'string' }).defaultNow().notNull(),
     updatedAt: timestamp('updatedAt', { precision: 3, mode: 'string' })
         .notNull()
@@ -18,13 +19,14 @@ export const user = pgTable('user', {
 });
 
 
-export type User = typeof user.$inferSelect;
-export type NewUser = typeof user.$inferInsert;
+export type Token = typeof tokens.$inferSelect;
+export type NewToken = typeof tokens.$inferInsert;
 
-export const userRelation = relations(user, ({ many }) => {
+export const tokenRelation = relations(tokens, ({ one }) => {
     return {
-        transactions: many(transaction),
-        homes: many(home),
-        userHomeBridges: many(userHomeBridge),
+        user: one(user, {
+            fields: [tokens.userId],
+            references: [user.id],
+        }),
     };
 });

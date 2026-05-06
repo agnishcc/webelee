@@ -1,6 +1,5 @@
 import { createMiddleware } from "hono/factory";
 import { verify } from "hono/jwt";
-import { error } from "node:console";
 
 
 import type { AccessTokenDecodedPayload } from "@/lib/types";
